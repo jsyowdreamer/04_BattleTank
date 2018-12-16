@@ -43,9 +43,21 @@ void ATankAIController::BeginPlay()
 		UE_LOG(LogTemp, Error, TEXT("World does not have a player tank!"))
 	}
 	else
-	{	
-		UE_LOG(LogTemp, Warning, TEXT("AI controller found player tank %s"), *PlayerTank->GetName()) 
+	{
+		UE_LOG(LogTemp, Warning, TEXT("AI controller found player tank %s"), *PlayerTank->GetName())
 
 	}
+}
+	
+void ATankAIController::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	//UE_LOG(LogTemp, Warning, TEXT("Tank player controller tick is working!"))
+	if (GetControllerTank() == nullptr) { return; }
+	if (GetPlayerTank() == nullptr) { return; }
+	
+	GetControllerTank()->AimtAt(GetPlayerTank()->GetActorLocation());
 
 }
+
