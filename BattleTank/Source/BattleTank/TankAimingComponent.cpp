@@ -4,6 +4,7 @@
 #include "Components/StaticMeshComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "TankBarrel.h"
+#include "TankTurret.h"
 #include "Engine/World.h"
 
 // Sets default values for this component's properties
@@ -31,6 +32,7 @@ void UTankAimingComponent::AimtAt(FVector HitLocation, float LaunchSpeed)
 		//auto time = GetWorld()->GetTimeSeconds();
 		//UE_LOG(LogTemp, Warning, TEXT("%f: Aim found"), time)
 		MoveBarrel(AimDirection);
+		MoveTurret(AimDirection);
 	}
 	else
 	{
@@ -40,11 +42,16 @@ void UTankAimingComponent::AimtAt(FVector HitLocation, float LaunchSpeed)
 
 }
 
-void UTankAimingComponent::SetBarrelReference(UTankBarrel * BarrelToSet)
+void UTankAimingComponent::SetBarrelReference(UTankBarrel* BarrelToSet)
 {
 	Barrel = BarrelToSet;
 
 	//UE_LOG(LogTemp, Warning, TEXT("%s set in tank aiming component for %s at %s"), *Barrel->GetName(), *GetOwner()->GetName(), *Barrel->GetComponentLocation().ToString())
+}
+
+void UTankAimingComponent::SetTurretReference(UTankTurret* TurretToSet)
+{
+	Turret = TurretToSet;
 }
 
 // Called when the game starts
@@ -72,8 +79,18 @@ void UTankAimingComponent::MoveBarrel(FVector AimDirection)
 	auto DeltaRotator = AimRotator - BarrelRotator;
 	//UE_LOG(LogTemp, Warning, TEXT("%s delta rotator %s"), *GetOwner()->GetName(), *DeltaRotator.ToString())
 
-	Barrel->Elevate(1.0f);
+	Barrel->Elevate(DeltaRotator.Pitch);
 
 	
+}
+
+void UTankAimingComponent::MoveTurret(FVector AimDirection)
+{
+	auto TurretRotator = Turret->GetForwardVector().Rotation();
+	auto AimRotator = AimDirection.Rotation();
+	auto DeltaRotator = AimRotator - TurretRotator;
+	//UE_LOG(LogTemp, Warning, TEXT("%s delta rotator %s"), *GetOwner()->GetName(), *DeltaRotator.ToString())
+
+	Turret->Rotate(DeltaRotator.Yaw);
 }
 
