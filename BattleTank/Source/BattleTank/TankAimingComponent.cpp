@@ -2,6 +2,7 @@
 
 #include "TankAimingComponent.h"
 #include "Components/StaticMeshComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values for this component's properties
 UTankAimingComponent::UTankAimingComponent()
@@ -14,16 +15,28 @@ UTankAimingComponent::UTankAimingComponent()
 }
 
 
-void UTankAimingComponent::AimtAt(FVector HitLocation)
+void UTankAimingComponent::AimtAt(FVector HitLocation, float LaunchSpeed)
 {
-	//UE_LOG(LogTemp, Warning, TEXT("%s aiming at %s"), *GetOwner()->GetName(), *HitLocation.ToString())
+	if (Barrel == nullptr) { return; }
+
+	FVector LaunchVelocity;
+	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
+
+	//GameplayStatics;
+	if (UGameplayStatics::SuggestProjectileVelocity(this, LaunchVelocity, StartLocation, HitLocation, LaunchSpeed,ESuggestProjVelocityTraceOption::DoNotTrace))
+	{
+		FVector AimDirection = LaunchVelocity.GetSafeNormal();
+		//UE_LOG(LogTemp, Warning, TEXT("%s aiming at %s"), *GetOwner()->GetName(), *AimDirection.ToString())
+		MoveBarrel(AimDirection);
+	}
+
 }
 
 void UTankAimingComponent::SetBarrelReference(UStaticMeshComponent * BarrelToSet)
 {
 	Barrel = BarrelToSet;
 
-	UE_LOG(LogTemp, Warning, TEXT("%s set in tank aiming component for %s at %s"), *Barrel->GetName(), *GetOwner()->GetName(), *Barrel->GetComponentLocation().ToString())
+	//UE_LOG(LogTemp, Warning, TEXT("%s set in tank aiming component for %s at %s"), *Barrel->GetName(), *GetOwner()->GetName(), *Barrel->GetComponentLocation().ToString())
 }
 
 // Called when the game starts
@@ -42,5 +55,14 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	// ...
+}
+
+void UTankAimingComponent::MoveBarrel(FVector AimDirection)
+{
+	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
+	auto AimRotator = AimDirection.Rotation();
+	auto DeltaRotator = AimRotator - BarrelRotator;
+	UE_LOG(LogTemp, Warning, TEXT("%s delta rotator %s"), *GetOwner()->GetName(), *DeltaRotator.ToString())
+
 }
 

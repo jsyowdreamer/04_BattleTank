@@ -13,7 +13,7 @@ ATank::ATank()
 
 void ATank::AimtAt(FVector HitLocation)
 {
-	TankAimingComponent->AimtAt(HitLocation);
+	TankAimingComponent->AimtAt(HitLocation, LaunchSpeed);
 }
 
 void ATank::SetBarrelReference(UStaticMeshComponent * BarrelToSet)
