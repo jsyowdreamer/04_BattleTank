@@ -4,6 +4,7 @@
 #include "GameFramework/Actor.h"
 #include "Engine/World.h"
 #include "DrawDebugHelpers.h"
+#include "Tank.h"
 
 
 ATank* ATankPlayerController::GetControllerTank() const
