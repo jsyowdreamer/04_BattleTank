@@ -58,6 +58,8 @@ void ATankAIController::Tick(float DeltaTime)
 	if (GetControllerTank() == nullptr) { return; }
 	if (GetPlayerTank() == nullptr) { return; }
 	
+	//auto time = GetWorld()->GetTimeSeconds();
+	//UE_LOG(LogTemp, Warning, TEXT("%f: AI aim at %s"), time, *GetPlayerTank()->GetActorLocation().ToString())
 	GetControllerTank()->AimtAt(GetPlayerTank()->GetActorLocation());
 
 }
