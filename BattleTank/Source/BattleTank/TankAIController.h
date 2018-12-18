@@ -28,7 +28,4 @@ protected:
 
 private:
 
-	ATank* GetControllerTank() const;
-
-	ATank* GetPlayerTank() const;
 };

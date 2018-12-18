@@ -18,7 +18,8 @@ public:
 
 	void Rotate(float Amount);
 
-private:
+private: //If made these private barrel and turret static mesh will be missing on hot reload. See UE-63298
+		//even if make this public and if this file is edited same thing would happen. Workaround is do not perform a hot reload
 	UPROPERTY(EditAnywhere, Category = Setup)
 	float MaxDegreePerSecond = 25.0f;
 
