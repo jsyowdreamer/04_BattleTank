@@ -14,9 +14,9 @@ void UTankTurret::Rotate(float Amount)
 		auto RawNewRotation = RelativeRotation.Yaw + RotationChange;
 		//UE_LOG(LogTemp, Warning, TEXT("RotationChange %f; RawNewRotation %f"), RotationChange, RawNewRotation)
 
-		auto Rotation = FMath::Clamp(RawNewRotation, MinRotationInDegree, MaxRotationInDegree);
+		//auto Rotation = FMath::Clamp(RawNewRotation, MinRotationInDegree, MaxRotationInDegree);
 
-		SetRelativeRotation(FRotator(0.0f, Rotation, 0.0f));
+		SetRelativeRotation(FRotator(0.0f, RawNewRotation, 0.0f));
 	}
 
 }

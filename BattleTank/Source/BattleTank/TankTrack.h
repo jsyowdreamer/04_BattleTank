@@ -20,4 +20,6 @@ public:
 
 private:
 	
+	UPROPERTY(EditAnywhere, Category = Setup)
+	float MaxDrivingForce = 40000000.0f; //N*cm*s2  40000kg * 10ms2
 };
