@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
 #include "TankAimingComponent.h"
+//#include "TankMovementComponent.h"
 #include "Tank.generated.h"  //must be the last include
 
 class UTankBarrel; //Forward declaration
@@ -35,6 +36,9 @@ protected:
 	virtual void BeginPlay() override;
 
 	UTankAimingComponent* TankAimingComponent = nullptr;
+
+	//UPROPERTY(BlueprintReadOnly) //Take note this is necessary to have the blueprintcallable function to appear in editor!!!! 
+	//UTankMovementComponent* TankMovementComponent = nullptr;
 
 public:	
 	// Called every frame

@@ -28,4 +28,5 @@ protected:
 
 private:
 
+	float AcceptanceRadius = 3000.0f;
 };

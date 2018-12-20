@@ -4,8 +4,8 @@
 
 void UTankTrack::SetThrottle(float Throttle)
 {
-	auto Name = this->GetName();
-	UE_LOG(LogTemp, Warning, TEXT("%s throttle %f"), *Name, Throttle)
+	//auto Name = this->GetName();
+	//UE_LOG(LogTemp, Warning, TEXT("%s throttle %f"), *Name, Throttle)
 
 	auto ForceApplied = this->GetForwardVector() * Throttle *MaxDrivingForce;
 	auto ForceLocation = this->GetComponentLocation();

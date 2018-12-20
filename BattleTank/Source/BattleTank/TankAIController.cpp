@@ -22,6 +22,9 @@ void ATankAIController::Tick(float DeltaTime)
 	//UE_LOG(LogTemp, Warning, TEXT("Tank player controller tick is working!"))
 	if (AITank == nullptr) { return; }
 	if (PlayerTank == nullptr) { return; }
+
+	//Move to actor
+	this->MoveToActor(PlayerTank, AcceptanceRadius);
 	
 	//auto time = GetWorld()->GetTimeSeconds();
 	//UE_LOG(LogTemp, Warning, TEXT("%f: AI aim at %s"), time, *GetPlayerTank()->GetActorLocation().ToString())
